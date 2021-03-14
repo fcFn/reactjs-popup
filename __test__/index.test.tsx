@@ -113,6 +113,17 @@ describe('Popup Component Render ', () => {
     popupContentShouldntExist();
     expect(document.body).toHaveStyle(`overflow: auto`);
   });
+  test('should call the onClick handler of the trigger element', () => {
+    const onClick = jest.fn();
+    render(
+      <Popup trigger={<button onClick={onClick}> trigger </button>}>
+        <span> popup Content </span>
+      </Popup>
+    );
+    fireEvent.click(screen.getByText('trigger'));
+    expect(onClick).toHaveBeenCalled();
+    popupContentShouldExist();
+  });
 });
 
 // test for "on" props status

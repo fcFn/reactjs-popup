@@ -212,18 +212,36 @@ export const Popup = forwardRef<PopupActions, PopupProps>(
       for (let i = 0, len = onAsArray.length; i < len; i++) {
         switch (onAsArray[i]) {
           case 'click':
-            triggerProps.onClick = togglePopup;
+            triggerProps.onClick = (event?: React.SyntheticEvent) => {
+              (trigger as JSX.Element)?.props?.onClick?.(event);
+              togglePopup(event);
+            };
             break;
           case 'right-click':
-            triggerProps.onContextMenu = onContextMenu;
+            triggerProps.onContextMenu = (event?: React.SyntheticEvent) => {
+              (trigger as JSX.Element)?.props?.onContextMenu?.(event);
+              onContextMenu(event);
+            };
             break;
           case 'hover':
-            triggerProps.onMouseEnter = onMouseEnter;
-            triggerProps.onMouseLeave = onMouseLeave;
+            triggerProps.onMouseEnter = (event?: React.SyntheticEvent) => {
+              (trigger as JSX.Element)?.props?.onMouseEnter?.(event);
+              onMouseEnter();
+            };
+            triggerProps.onMouseLeave = (event?: React.SyntheticEvent) => {
+              (trigger as JSX.Element)?.props?.onMouseLeave?.(event);
+              onMouseLeave();
+            };
             break;
           case 'focus':
-            triggerProps.onFocus = onMouseEnter;
-            triggerProps.onBlur = onMouseLeave;
+            triggerProps.onFocus = (event?: React.SyntheticEvent) => {
+              (trigger as JSX.Element)?.props?.onFocus?.(event);
+              onMouseEnter();
+            };
+            triggerProps.onBlur = (event?: React.SyntheticEvent) => {
+              (trigger as JSX.Element)?.props?.onMouseLeave?.(event);
+              onMouseLeave();
+            };
             break;
           default:
         }
